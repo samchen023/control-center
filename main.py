@@ -5,6 +5,7 @@ from tkinter import *
 import tkinter.font as tkFont
 
 
+
 def on_submit():
     p = subprocess.Popen('ssid.cmd', shell=True, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT, encoding='gb2312')
@@ -19,14 +20,16 @@ def on_submit():
 
 
 def run_speedtest():
-    output = subprocess.run([r"path\to\speedtest.exe"],
+    output = subprocess.run(['python', 'test2.py'],
                             capture_output=True, text=True)
     text.insert(tk.END, output.stdout)
 
 
+
 root = tk.Tk()
 root.title("program")
-root.geometry("400x240")
+root.geometry("550x300")
+
 
 menu = tk.Menu(root)
 
@@ -42,21 +45,25 @@ submenu2 = tk.Menu(tearoff=0)
 menu.add_cascade(label="menu2", menu=submenu2)
 
 label = tk.Label(root, text="Connected WIFI:")
-label.pack()
+label.pack(side="top")
+
 
 text_field = tk.Text(root)
-text_field.pack()
+text_field.pack(side="top")
 text_field.config(font=("Microsoft JhengHei UI", 14))
 text_field.config(state="disabled")
+text_field.config(width=50,height=5)
 
 label = tk.Label(root, text="Speedtest")
-label.pack()
+label.pack(side="left")
 
 text = tk.Text(root)
-text.pack()
+text.pack(side="left")
+text.config(width=50,height=5)
+
 
 button = tk.Button(root, text="Run Speedtest", command=run_speedtest)
-button.pack()
+button.pack(side="left")
 
 on_submit()
 root.mainloop()
