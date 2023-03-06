@@ -3,6 +3,7 @@ import subprocess
 from tkinter.tix import WINDOW
 from tkinter import *
 import tkinter.font as tkFont
+import webbrowser
 
 
 def on_submit():
@@ -24,10 +25,20 @@ def run_speedtest():
     text.insert(tk.END, output.stdout)
 
 
+def callback(url):
+    webbrowser.open_new(url)
+
+
 def createNewWindow():
     newWindow = tk.Toplevel(root)
     newWindow.geometry("400x200")
-    label = tk.Label(newWindow, text="Connected WIFI:")
+    label = tk.Label(newWindow, text="Made by Samchen023")
+    label.pack(side="top")
+    link1 = Label(newWindow, text="Github",
+                  fg="blue", cursor="hand2")
+    link1.pack()
+    link1.bind(
+        "<Button-1>", lambda e: callback("https://github.com/samchen023/control-center"))
 
 
 root = tk.Tk()
