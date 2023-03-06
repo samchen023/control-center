@@ -55,10 +55,10 @@ def createupdateWindow():
             release_data = response.json()[0]
             latest_release_tag_name = release_data["name"]
             if latest_release_tag_name <= APP_VERSION:
-                message = f"You are running version {APP_VERSION} of {repo_name}, which is up to date."
+                message = f"You are running version {APP_VERSION}, which is up to date."
                 show_button = False
             else:
-                message = f"A new version of {repo_name} ({latest_release_tag_name}) is available. You are running version {APP_VERSION}."
+                message = f"A new version ({latest_release_tag_name}) is available. You are running version {APP_VERSION}."
                 show_button = True
         except (KeyError, IndexError):
             message = "Failed to retrieve release data from GitHub"
@@ -68,7 +68,7 @@ def createupdateWindow():
         show_button = False
 
     newWindow = tk.Toplevel(root)
-    newWindow.geometry("600x200")
+    newWindow.geometry("400x100")
     newWindow.title(f"UPDATE")
     label = tk.Label(newWindow, text=message)
     label.pack(padx=10, pady=10)
