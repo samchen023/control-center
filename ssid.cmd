@@ -1,5 +1,4 @@
 @echo off
-
 set x=None
 
 @for /f "usebackq tokens=1,*" %%i in (`netsh WLAN show interfaces`) do (
@@ -8,5 +7,6 @@ set x=None
 
 )
 
-set x=%x: =%
+set x=%x:*: =%
+
 echo %x%

@@ -19,13 +19,15 @@ def on_submit():
 
 
 def run_speedtest():
-    output = subprocess.run(['python', 'test2.py'],
+    output = subprocess.run(['python', 'speedtest.py'],
                             capture_output=True, text=True)
     text.insert(tk.END, output.stdout)
 
 
 def createNewWindow():
     newWindow = tk.Toplevel(root)
+    newWindow.geometry("400x200")
+    label = tk.Label(newWindow, text="Connected WIFI:")
 
 
 root = tk.Tk()
