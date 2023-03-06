@@ -37,6 +37,8 @@ def createNewWindow():
     newWindow.geometry("400x200")
     label = tk.Label(newWindow, text="Made by Samchen023")
     label.pack(side="top")
+    version_label = tk.Label(newWindow, text=f"App Version: {APP_VERSION}")
+    version_label.pack()
     link1 = Label(newWindow, text="Github",
                   fg="blue", cursor="hand2")
     link1.pack()
