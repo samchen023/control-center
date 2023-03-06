@@ -41,6 +41,11 @@ def createNewWindow():
         "<Button-1>", lambda e: callback("https://github.com/samchen023/control-center"))
 
 
+def createupdateWindow():
+    newWindow = tk.Toplevel(root)
+    newWindow.geometry("400x200")
+
+
 root = tk.Tk()
 root.title("program")
 root.geometry("550x300")
@@ -58,7 +63,8 @@ submenu1.add_command(label="exit", command=root.destroy)
 submenu1.add_command(label="info", command=createNewWindow)
 
 submenu2 = tk.Menu(tearoff=0)
-menu.add_cascade(label="menu2", menu=submenu2)
+menu.add_cascade(label="help", menu=submenu2)
+submenu2.add_command(label="update", command=createupdateWindow)
 
 label = tk.Label(root, text="Connected WIFI:")
 label.pack(side="top")
