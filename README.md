@@ -23,4 +23,5 @@ macos and linux aren't compatible
 
 - speedtest will freeze the app 
 - speedtest terminal will popup
-These issue will be fixed next version
+
+Check the  [issue tracker](https://github.com/samchen023/control-center/issues)  for work-in-progress or known bugs!
