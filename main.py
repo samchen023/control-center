@@ -6,12 +6,17 @@ import tkinter.font as tkFont
 import webbrowser
 import requests
 
-APP_VERSION = 'v0.0.1'
+APP_VERSION = "v0.0.1"
 
 
 def on_submit():
-    p = subprocess.Popen('ssid.cmd', shell=True, stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT, encoding='gb2312')
+    p = subprocess.Popen(
+        "ssid.cmd",
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        encoding="gb2312",
+    )
     output = p.communicate()[0]
     text_field.config(state="normal")
     text_field.delete(1.0, tk.END)
@@ -23,8 +28,7 @@ def on_submit():
 
 
 def run_speedtest():
-    output = subprocess.run(['python', 'speedtest.py'],
-                            capture_output=True, text=True)
+    output = subprocess.run(["python", "speed.py"], capture_output=True, text=True)
     text.insert(tk.END, output.stdout)
 
 
@@ -35,15 +39,16 @@ def callback(url):
 def createNewWindow():
     newWindow = tk.Toplevel(root)
     newWindow.geometry("400x200")
+    newWindow.title("Info")
     label = tk.Label(newWindow, text="Made by Samchen023")
     label.pack(side="top")
     version_label = tk.Label(newWindow, text=f"App Version: {APP_VERSION}")
     version_label.pack()
-    link1 = Label(newWindow, text="Github",
-                  fg="blue", cursor="hand2")
+    link1 = Label(newWindow, text="Github", fg="blue", cursor="hand2")
     link1.pack()
     link1.bind(
-        "<Button-1>", lambda e: callback("https://github.com/samchen023/control-center"))
+        "<Button-1>", lambda e: callback("https://github.com/samchen023/control-center")
+    )
 
 
 def createupdateWindow():
@@ -51,7 +56,8 @@ def createupdateWindow():
     repo_name = "control-center"
 
     response = requests.get(
-        f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases?per_page=1")
+        f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases?per_page=1"
+    )
     if response.status_code == 200:
         try:
             release_data = response.json()[0]
@@ -75,11 +81,13 @@ def createupdateWindow():
     label = tk.Label(newWindow, text=message)
     label.pack(padx=10, pady=10)
     if show_button:
-        button = tk.Button(newWindow, text="UPDATE", command=lambda: webbrowser.open(
-            release_data["html_url"]))
+        button = tk.Button(
+            newWindow,
+            text="UPDATE",
+            command=lambda: webbrowser.open(release_data["html_url"]),
+        )
         button.pack(padx=10, pady=10)
-    close_button = tk.Button(newWindow, text="Close",
-                             command=newWindow.destroy)
+    close_button = tk.Button(newWindow, text="Close", command=newWindow.destroy)
     close_button.pack(padx=10, pady=10)
 
 

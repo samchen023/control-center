@@ -19,5 +19,8 @@ def get_new_speeds():
     return (ping, download_mbs, upload_mbs)
 
 
-new_speeds = get_new_speeds()
-print(new_speeds)
+ping, download_mbs, upload_mbs = get_new_speeds()
+result_string = "Ping = {:.2f} ms, Download speed = {:.2f} Mbps, Upload speed = {:.2f} Mbps.".format(
+    ping, download_mbs, upload_mbs
+)
+print(result_string)
