@@ -19,7 +19,8 @@ macos and linux aren't compatible
 4. use `python insatll.py` to install addons 
 5. ready to run
 
-#Knowed issue
+# Knowed issue
+
 - speedtest will freeze the app 
 - speedtest terminal will popup
 These issue will be fixed next version
