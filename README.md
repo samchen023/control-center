@@ -4,7 +4,7 @@ making a GUI exe program with python tkinter
 
 with wifi connection ,bluetooth connected device name and others
 # Environment
-control-center can work on both Windows 11,10 (x64)
+control-center can work on both **Windows 11,10 (x64)**
 
 older version aren't been tested 
 
