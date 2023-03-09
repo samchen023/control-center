@@ -9,5 +9,5 @@ with wifi connection ,bluetooth connected device name and others
 
 1. install python 3.10 (https://www.python.org/downloads/release/python-3100/)
 2. open windows cmd
-3. use `python insatll.py` install addons `install.py`
+3. use `python insatll.py` install addons 
 4. ready to run
