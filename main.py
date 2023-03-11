@@ -6,7 +6,7 @@ import tkinter.font as tkFont
 import webbrowser
 import requests
 
-APP_VERSION = "v0.0.1"
+APP_VERSION = "v1.0.0"
 
 
 def on_submit():
@@ -25,6 +25,9 @@ def on_submit():
     else:
         text_field.insert(tk.END, output)
     text_field.config(state="disabled")
+
+    refresh_label.config(text="Text Refreshed", fg="green")
+    root.after(2500, hide_refresh_label)
 
 
 def run_speedtest():
@@ -91,6 +94,10 @@ def createupdateWindow():
     close_button.pack(padx=10, pady=10)
 
 
+def hide_refresh_label():
+    refresh_label.config(text="")
+
+
 root = tk.Tk()
 root.title("program")
 root.geometry("550x300")
@@ -113,17 +120,22 @@ menu.add_cascade(label="help", menu=submenu2)
 submenu2.add_command(label="Update", command=createupdateWindow)
 
 label = tk.Label(root, text="Connected WIFI:")
-label.pack(side="top")
+label.pack(side="top", pady=5)
 
 
 text_field = tk.Text(root)
 text_field.pack(side="top")
-text_field.config(font=("Microsoft JhengHei UI", 14))
+text_field.config(font=("Microsoft JhengHei UI", 14), width=50, height=5)
 text_field.config(state="disabled")
 text_field.config(width=50, height=5)
 
+refresh_button = tk.Button(root, text="Refresh", command=on_submit)
+refresh_button.pack(side="top", padx=10, pady=5)
+refresh_label = tk.Label(root, text="", font=("Microsoft JhengHei UI", 10))
+refresh_label.pack(side="top")
+
 label = tk.Label(root, text="Speedtest")
-label.pack(side="left")
+label.pack(side="top", pady=5)
 
 text = tk.Text(root)
 text.pack(side="left")
@@ -131,7 +143,9 @@ text.config(width=50, height=5)
 
 
 button = tk.Button(root, text="Run Speedtest", command=run_speedtest)
-button.pack(side="left")
+button.pack(side="top", padx=10, pady=5)
+
+refresh_label.config(text="", fg="green")
 
 on_submit()
 root.mainloop()
