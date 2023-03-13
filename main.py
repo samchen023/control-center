@@ -26,8 +26,15 @@ def on_submit():
         text_field.insert(tk.END, output)
     text_field.config(state="disabled")
 
-    refresh_label.config(text="Text Refreshed", fg="green")
+
+def refreshtext():
+    refresh_label.config(text="Refreshed", fg="green")
     root.after(2500, hide_refresh_label)
+
+
+def refreshwifi():
+    refreshtext()
+    on_submit()
 
 
 def run_speedtest():
@@ -39,7 +46,7 @@ def callback(url):
     webbrowser.open_new(url)
 
 
-def createNewWindow():
+def createinfoWindow():
     newWindow = tk.Toplevel(root)
     newWindow.geometry("400x200")
     newWindow.title("Info")
@@ -100,7 +107,7 @@ def hide_refresh_label():
 
 root = tk.Tk()
 root.title("program")
-root.geometry("550x300")
+root.geometry("550x350")
 
 
 menu = tk.Menu(root)
@@ -112,7 +119,7 @@ submenu1 = tk.Menu(activebackground="gray", tearoff=0)
 menu.add_cascade(label="file", menu=submenu1)
 
 
-submenu1.add_command(label="INFO", command=createNewWindow)
+submenu1.add_command(label="INFO", command=createinfoWindow)
 submenu1.add_command(label="EXIT", command=root.destroy)
 
 submenu2 = tk.Menu(tearoff=0)
@@ -129,8 +136,9 @@ text_field.config(font=("Microsoft JhengHei UI", 14), width=50, height=5)
 text_field.config(state="disabled")
 text_field.config(width=50, height=5)
 
-refresh_button = tk.Button(root, text="Refresh", command=on_submit)
+refresh_button = tk.Button(root, text="Refresh WIFI", command=refreshwifi)
 refresh_button.pack(side="top", padx=10, pady=5)
+
 refresh_label = tk.Label(root, text="", font=("Microsoft JhengHei UI", 10))
 refresh_label.pack(side="top")
 
