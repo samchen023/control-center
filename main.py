@@ -6,7 +6,7 @@ import tkinter.font as tkFont
 import webbrowser
 import requests
 
-APP_VERSION = "v1.0.0"
+APP_VERSION = "v1.1.0"
 
 
 def on_submit():
@@ -72,8 +72,11 @@ def createupdateWindow():
         try:
             release_data = response.json()[0]
             latest_release_tag_name = release_data["name"]
-            if latest_release_tag_name <= APP_VERSION:
-                message = f"You are running version {APP_VERSION}, which is up to date."
+            if latest_release_tag_name == APP_VERSION:
+                message = f"You are running version {APP_VERSION}."
+                show_button = False
+            elif latest_release_tag_name < APP_VERSION:
+                message = f"You are running a beta version {APP_VERSION}."
                 show_button = False
             else:
                 message = f"A new version ({latest_release_tag_name}) is available. You are running version {APP_VERSION}."
