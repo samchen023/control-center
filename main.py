@@ -8,7 +8,6 @@ import webbrowser
 import requests
 import urllib.request
 import io
-from PIL import Image, ImageTk
 
 
 APP_VERSION = "v1.2.0"
