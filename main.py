@@ -6,8 +6,8 @@ from tkinter import *
 import tkinter.font as tkFont
 import webbrowser
 import requests
-import urllib.request
-import io
+from tkinter import simpledialog
+import webbrowser
 
 
 APP_VERSION = "v1.2.0"
@@ -111,6 +111,74 @@ def createupdateWindow():
 def hide_refresh_label():
     refresh_label.config(text="")
 
+def open_accuweather_website():
+    webbrowser.open('https://developer.accuweather.com/')
+
+try:
+    with open('api_key.txt', 'r') as f:
+        api_key = f.read()
+except:
+    def save_api_key():
+        with open('api_key.txt', 'w') as f:
+            f.write(entry.get())
+        popup.destroy()
+
+    popup = simpledialog.Toplevel()
+    popup.grab_set() 
+    popup.geometry('300x150')
+    popup.title('API Key')
+
+    label = tk.Label(popup, text='Please enter your AccuWeather API key:')
+    label.pack()
+
+    entry = tk.Entry(popup)
+    entry.pack()
+
+    button = tk.Button(popup, text='Submit', command=save_api_key)
+    button.pack()
+
+    website_button = tk.Button(popup, text='Get API Key', command=open_accuweather_website)
+    website_button.pack()
+
+    popup.mainloop()
+
+def get_location():
+    url = 'https://ipinfo.io/json'
+    response = requests.get(url)
+    data = response.json()
+
+    city = data['city']
+    region = data['region']
+    country = data['country']
+
+    location_label.config(text=f'Your location: {city}, {region}, {country}')
+
+    return city
+
+def get_weather(location):
+    url = f'http://dataservice.accuweather.com/locations/v1/cities/search?q={location}&apikey={api_key}'
+    response = requests.get(url)
+    data = response.json()
+
+    location_key = data[0]['Key']
+
+    url = f'http://dataservice.accuweather.com/currentconditions/v1/{location_key}?apikey={api_key}&details=true'
+    response = requests.get(url)
+    data = response.json()
+
+    weather_text = data[0]['WeatherText']
+    temperature = data[0]['Temperature']['Metric']['Value']
+    weather_icon_code = data[0]['WeatherIcon']
+
+    weather_icon_url = f'http://developer.accuweather.com/sites/default/files/{weather_icon_code:02d}-s.png'
+    response = requests.get(weather_icon_url)
+    image_data = response.content
+    image = tk.PhotoImage(data=image_data)
+    weather_icon_label.config(image=image)
+    weather_icon_label.image = image
+
+    weather_label.config(text=f'{weather_text}, temperature: {temperature}°C')
+
 
 root = tk.Tk()
 root.title("program")
@@ -165,6 +233,16 @@ button.grid(row=0, column=1, padx=10, pady=10)
 
 refresh_label.config(text="", fg="green")
 
+location_label = tk.Label(root, text='Your location:')
+location_label.pack()
 
+weather_icon_label = tk.Label(root)
+weather_icon_label.pack()
+
+weather_label = tk.Label(root, text='')
+weather_label.pack()
+
+location = get_location()
+get_weather(location)
 on_submit()
 root.mainloop()
