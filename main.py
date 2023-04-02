@@ -119,14 +119,20 @@ try:
         api_key = f.read()
 except:
     def save_api_key():
+        global api_key
+        api_key = ''
         with open('api_key.txt', 'w') as f:
             f.write(entry.get())
+        with open('api_key.txt', 'r') as f:
+            api_key = f.read()
         popup.destroy()
-
-    popup = simpledialog.Toplevel()
-    popup.grab_set() 
+        return api_key
+    
+    popup = tk.Toplevel()
     popup.geometry('300x150')
     popup.title('API Key')
+    popup.attributes("-topmost", True)
+    
 
     label = tk.Label(popup, text='Please enter your AccuWeather API key:')
     label.pack()
