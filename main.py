@@ -12,7 +12,7 @@ APP_VERSION = "v1.2.0"
 
 ##Accweather_API
 def open_accuweather_website():
-    webbrowser.open('https://developer.accuweather.com/user/login')
+    webbrowser.open('https://github.com/samchen023/control-center/wiki#how-to-get-accuweather-api-key')
 
 def save_api_key():
         global api_key
