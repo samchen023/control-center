@@ -12,7 +12,7 @@ APP_VERSION = "v1.2.0"
 
 ##Accweather_API
 def open_accuweather_website():
-    webbrowser.open('https://developer.accuweather.com/')
+    webbrowser.open('https://developer.accuweather.com/user/login')
 
 def save_api_key():
         global api_key
@@ -184,7 +184,7 @@ def createupdateWindow():
 
 
 root = tk.Tk()
-root.title("program")
+root.title("Program")
 root.geometry("1000x450")
 
 
@@ -194,14 +194,14 @@ menu = tk.Menu(root)
 root.config(menu=menu)
 
 submenu1 = tk.Menu(activebackground="gray", tearoff=0)
-menu.add_cascade(label="file", menu=submenu1)
+menu.add_cascade(label="File", menu=submenu1)
 
 
 submenu1.add_command(label="INFO", command=createinfoWindow)
 submenu1.add_command(label="EXIT", command=root.destroy)
 
 submenu2 = tk.Menu(tearoff=0)
-menu.add_cascade(label="help", menu=submenu2)
+menu.add_cascade(label="Help", menu=submenu2)
 submenu2.add_command(label="Update", command=createupdateWindow)
 
 label = ttk.Label(root, text="Connected WIFI:")
