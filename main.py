@@ -3,122 +3,18 @@ import subprocess
 from tkinter import ttk
 from tkinter.tix import WINDOW
 from tkinter import *
-import tkinter.font as tkFont
 import webbrowser
 import requests
-from tkinter import simpledialog
-import webbrowser
+
 
 
 APP_VERSION = "v1.2.0"
 
-
-def on_submit():
-    p = subprocess.Popen(
-        "ssid.cmd",
-        shell=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        encoding="gb2312",
-    )
-    output = p.communicate()[0]
-    text_field.config(state="normal")
-    text_field.delete(1.0, tk.END)
-    if output.strip() == "None":
-        text_field.insert(tk.END, "Disconnected")
-    else:
-        text_field.insert(tk.END, output)
-    text_field.config(state="disabled")
-
-
-def refreshtext():
-    refresh_label.config(text="Refreshed", fg="green")
-    root.after(2500, hide_refresh_label)
-
-
-def refreshwifi():
-    refreshtext()
-    on_submit()
-
-
-def run_speedtest():
-    output = subprocess.run(["python", "speed.py"], capture_output=True, text=True)
-    text.insert(tk.END, output.stdout)
-
-
-def callback(url):
-    webbrowser.open_new(url)
-
-
-def createinfoWindow():
-    newWindow = tk.Toplevel(root)
-    newWindow.geometry("400x200")
-    newWindow.title("Info")
-    label = ttk.Label(newWindow, text="Made by Samchen023")
-    label.pack(side="top")
-    version_label = ttk.Label(newWindow, text=f"App Version: {APP_VERSION}")
-    version_label.pack()
-    link1 = Label(newWindow, text="Github", fg="blue", cursor="hand2")
-    link1.pack()
-    link1.bind(
-        "<Button-1>", lambda e: callback("https://github.com/samchen023/control-center")
-    )
-
-
-def createupdateWindow():
-    repo_owner = "samchen023"
-    repo_name = "control-center"
-
-    response = requests.get(
-        f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases?per_page=1"
-    )
-    if response.status_code == 200:
-        try:
-            release_data = response.json()[0]
-            latest_release_tag_name = release_data["name"]
-            if latest_release_tag_name == APP_VERSION:
-                message = f"You are running version {APP_VERSION}."
-                show_button = False
-            elif latest_release_tag_name < APP_VERSION:
-                message = f"You are running a beta version {APP_VERSION}."
-                show_button = False
-            else:
-                message = f"A new version ({latest_release_tag_name}) is available. You are running version {APP_VERSION}."
-                show_button = True
-        except (KeyError, IndexError):
-            message = "Failed to retrieve release data from GitHub"
-            show_button = False
-    else:
-        message = "Failed to retrieve release data from GitHub"
-        show_button = False
-
-    newWindow = tk.Toplevel(root)
-    newWindow.geometry("400x100")
-    newWindow.title(f"UPDATE")
-    label = ttk.Label(newWindow, text=message)
-    label.pack(padx=10, pady=10)
-    if show_button:
-        button = ttk.Button(
-            newWindow,
-            text="UPDATE",
-            command=lambda: webbrowser.open(release_data["html_url"]),
-        )
-        button.pack(padx=10, pady=10)
-    close_button = ttk.Button(newWindow, text="Close", command=newWindow.destroy)
-    close_button.pack(padx=10, pady=10)
-
-
-def hide_refresh_label():
-    refresh_label.config(text="")
-
+##Accweather_API
 def open_accuweather_website():
     webbrowser.open('https://developer.accuweather.com/')
 
-try:
-    with open('api_key.txt', 'r') as f:
-        api_key = f.read()
-except:
-    def save_api_key():
+def save_api_key():
         global api_key
         api_key = ''
         with open('api_key.txt', 'w') as f:
@@ -127,8 +23,12 @@ except:
             api_key = f.read()
         popup.destroy()
         return api_key
-    
-    popup = tk.Toplevel()
+
+try:
+    with open('api_key.txt', 'r') as f:
+        api_key = f.read()
+except:
+    popup = tk.Tk()
     popup.geometry('300x150')
     popup.title('API Key')
     popup.attributes("-topmost", True)
@@ -184,6 +84,103 @@ def get_weather(location):
     weather_icon_label.image = image
 
     weather_label.config(text=f'{weather_text}, temperature: {temperature}°C')
+
+##WifiSSID
+def on_submit():
+    p = subprocess.Popen(
+        "ssid.cmd",
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        encoding="gb2312",
+    )
+    output = p.communicate()[0]
+    text_field.config(state="normal")
+    text_field.delete(1.0, tk.END)
+    if output.strip() == "None":
+        text_field.insert(tk.END, "Disconnected")
+    else:
+        text_field.insert(tk.END, output)
+    text_field.config(state="disabled")
+
+
+def refreshtext():
+    refresh_label.config(text="Refreshed", fg="green")
+    root.after(2500, hide_refresh_label)
+
+
+def refreshwifi():
+    refreshtext()
+    on_submit()
+
+def hide_refresh_label():
+    refresh_label.config(text="")
+
+##Speedtest_cli
+def run_speedtest():
+    output = subprocess.run(["python", "speed.py"], capture_output=True, text=True)
+    text.insert(tk.END, output.stdout)
+
+##infowindow
+def createinfoWindow():
+    newWindow = tk.Toplevel(root)
+    newWindow.geometry("400x200")
+    newWindow.title("Info")
+    label = ttk.Label(newWindow, text="Made by Samchen023")
+    label.pack(side="top")
+    version_label = ttk.Label(newWindow, text=f"App Version: {APP_VERSION}")
+    version_label.pack()
+    link1 = Label(newWindow, text="Github", fg="blue", cursor="hand2")
+    link1.pack()
+    link1.bind(
+        "<Button-1>", lambda e: callback("https://github.com/samchen023/control-center")
+    )
+
+def callback(url):
+    webbrowser.open_new(url)
+
+##updatewindow
+def createupdateWindow():
+    repo_owner = "samchen023"
+    repo_name = "control-center"
+
+    response = requests.get(
+        f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases?per_page=1"
+    )
+    if response.status_code == 200:
+        try:
+            release_data = response.json()[0]
+            latest_release_tag_name = release_data["name"]
+            if latest_release_tag_name == APP_VERSION:
+                message = f"You are running version {APP_VERSION}."
+                show_button = False
+            elif latest_release_tag_name < APP_VERSION:
+                message = f"You are running a beta version {APP_VERSION}."
+                show_button = False
+            else:
+                message = f"A new version ({latest_release_tag_name}) is available. You are running version {APP_VERSION}."
+                show_button = True
+        except (KeyError, IndexError):
+            message = "Failed to retrieve release data from GitHub"
+            show_button = False
+    else:
+        message = "Failed to retrieve release data from GitHub"
+        show_button = False
+
+    newWindow = tk.Toplevel(root)
+    newWindow.geometry("400x100")
+    newWindow.title(f"UPDATE")
+    label = ttk.Label(newWindow, text=message)
+    label.pack(padx=10, pady=10)
+    if show_button:
+        button = ttk.Button(
+            newWindow,
+            text="UPDATE",
+            command=lambda: webbrowser.open(release_data["html_url"]),
+        )
+        button.pack(padx=10, pady=10)
+    close_button = ttk.Button(newWindow, text="Close", command=newWindow.destroy)
+    close_button.pack(padx=10, pady=10)
 
 
 root = tk.Tk()
