@@ -152,7 +152,7 @@ def createupdateWindow():
             release_data = response.json()[0]
             latest_release_tag_name = release_data["name"]
             if latest_release_tag_name == APP_VERSION:
-                message = f"You are running version {APP_VERSION}."
+                message = f"You are running latest version {APP_VERSION}."
                 show_button = False
             elif latest_release_tag_name < APP_VERSION:
                 message = f"You are running a beta version {APP_VERSION}."
